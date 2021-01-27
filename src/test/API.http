@@ -1,0 +1,6 @@
+POST localhost:8080/api/signin
+
+{
+  "username": "sa",
+  "passwotd": "123"
+}
