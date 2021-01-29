@@ -1,7 +1,6 @@
 package ru.nachinkina.kotlinOauth.controller
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
@@ -15,8 +14,8 @@ import ru.nachinkina.kotlinOauth.entity.User
 import ru.nachinkina.kotlinOauth.jwt.JwtProvider
 import ru.nachinkina.kotlinOauth.jwt.JwtResponse
 import ru.nachinkina.kotlinOauth.jwt.ResponseMessage
-import ru.nachinkina.kotlinOauth.oauth.LoginUser
-import ru.nachinkina.kotlinOauth.oauth.NewUser
+import ru.nachinkina.kotlinOauth.DTO.LoginUser
+import ru.nachinkina.kotlinOauth.DTO.NewUser
 import ru.nachinkina.kotlinOauth.repository.RoleRepository
 import ru.nachinkina.kotlinOauth.repository.UserRepository
 import java.util.*
@@ -26,7 +25,7 @@ import java.util.*
 @RequestMapping("/api/auth")
 class AuthController {
 
-
+    @Autowired
     lateinit var authenticationManager: AuthenticationManager
 
     @Autowired
@@ -35,6 +34,7 @@ class AuthController {
     @Autowired
     lateinit var roleRepository: RoleRepository
 
+    @Autowired
     lateinit var encoder: PasswordEncoder
 
     @Autowired
@@ -51,7 +51,7 @@ class AuthController {
                 UsernamePasswordAuthenticationToken(loginRequest.username, loginRequest.password)
             )
             SecurityContextHolder.getContext().setAuthentication(authentication)
-            val jwt: String = jwtProvider.generateJwtToken(user.username)
+            val jwt: String = jwtProvider.generateJwtToken(user.username!!)
             val authorities: List<GrantedAuthority> = listOf(SimpleGrantedAuthority(user.role!!.name))
             return ResponseEntity.ok(JwtResponse(jwt, user.username, authorities))
         } else {
@@ -67,18 +67,12 @@ class AuthController {
         val userCandidate: Optional <User> = userRepository.findByUsername(newUser.username!!)
 
         if (!userCandidate.isPresent) {
-            if (usernameExists(newUser.username!!)) {
-                return ResponseEntity(ResponseMessage("Username is already taken!"),
-                    HttpStatus.BAD_REQUEST)
-            }
 
             // Creating user's account
-            val user = User(
-                0,
-                newUser.username!!,
-                encoder.encode(newUser.password),
-                null
+            val user = User(username = newUser.username,
+                password = encoder.encode(newUser.password)
             )
+
             user.role = roleRepository.findByName("ROLE_USER")
 
             userRepository.save(user)
@@ -88,10 +82,6 @@ class AuthController {
             return ResponseEntity(ResponseMessage("User already exists!"),
                 HttpStatus.BAD_REQUEST)
         }
-    }
-
-    private fun emailExists(email: String): Boolean {
-        return userRepository.findByUsername(email).isPresent
     }
 
     private fun usernameExists(username: String): Boolean {

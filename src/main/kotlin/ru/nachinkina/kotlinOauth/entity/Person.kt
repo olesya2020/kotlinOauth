@@ -13,7 +13,7 @@ data class Person(
         val id: Long = -1,
 
         @Column(nullable = false)
-        val name: String = ""
+        val name: String? = null
 
 )
 

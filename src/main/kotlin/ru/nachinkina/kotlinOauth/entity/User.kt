@@ -10,12 +10,13 @@ data class User (
     val id: Long = -1,
 
     @Column(name="username")
-    var username: String = "",
+    var username: String? = null,
 
     @Column(name="password")
-    var password: String = "",
+    var password: String? = null,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn (name="roleid")
     var role: Role? = null
 
 )

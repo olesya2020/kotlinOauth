@@ -6,9 +6,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.stereotype.Service
 import ru.nachinkina.kotlinOauth.repository.UserRepository
 import kotlin.jvm.Throws
 
+@Service
 class UserDetailsServiceImpl : UserDetailsService {
 
     @Autowired
@@ -19,10 +21,10 @@ class UserDetailsServiceImpl : UserDetailsService {
 
         val user = userRepository.findByUsername(username).get()
 
-        if(user == null)
+        if(user.username == null)
              throw UsernameNotFoundException("User '$username' not found")
 
-        val authorities: GrantedAuthority = SimpleGrantedAuthority(user.role!!.name)
+        val authorities: List<GrantedAuthority> = listOf(SimpleGrantedAuthority(user.role!!.name))
 
         return org.springframework.security.core.userdetails.User
             .withUsername(username)

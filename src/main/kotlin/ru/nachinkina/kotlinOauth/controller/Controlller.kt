@@ -9,6 +9,7 @@ import ru.nachinkina.kotlinOauth.handler.Greeting
 import ru.nachinkina.kotlinOauth.handler.PersonService
 import ru.nachinkina.kotlinOauth.repository.UserRepository
 
+
 @RestController
 @RequestMapping("/api")
 class Controlller(

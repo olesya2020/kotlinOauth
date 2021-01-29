@@ -12,10 +12,8 @@ import java.util.*
 
 @Component
 class JwtProvider {
-    private val logger: Logger = LoggerFactory.getLogger(JwtProvider::class.java)
 
-    @Autowired
-    lateinit var userRepository: UserRepository
+    private val logger: Logger = LoggerFactory.getLogger(JwtProvider::class.java)
 
     @Value("\${assm.app.jwtSecret}")
     lateinit var jwtSecret: String

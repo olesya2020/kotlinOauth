@@ -1,4 +1,4 @@
-package ru.nachinkina.kotlinOauth.oauth
+package ru.nachinkina.kotlinOauth.DTO
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.io.Serializable

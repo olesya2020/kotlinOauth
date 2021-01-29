@@ -7,8 +7,8 @@ import javax.persistence.*
 data class Role (
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id: Long,
+    val id: Long = -1,
 
     @Column(name = "name")
-    val name: String = ""
+    val name: String? = null
 )

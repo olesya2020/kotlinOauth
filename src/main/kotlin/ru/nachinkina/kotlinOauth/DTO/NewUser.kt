@@ -1,4 +1,4 @@
-package ru.nachinkina.kotlinOauth.oauth
+package ru.nachinkina.kotlinOauth.DTO
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.io.Serializable
@@ -13,7 +13,7 @@ class NewUser : Serializable {
 
     constructor() {}
 
-    constructor(username: String, password: String, recaptchaToken: String) {
+    constructor(username: String, password: String) {
         this.username = username
         this.password = password
     }
