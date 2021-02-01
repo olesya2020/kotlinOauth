@@ -53,7 +53,8 @@ class JwtProvider {
         return Jwts.parser()
             .setSigningKey(jwtSecret)
             .parseClaimsJws(token)
-            .getBody().getSubject()
+            .getBody()
+            .getSubject()
     }
 
 }

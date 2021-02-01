@@ -6,7 +6,7 @@ import javax.persistence.*
 @Table(name = "user", schema="test")
 data class User (
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "test.user_id_seq")
     val id: Long = -1,
 
     @Column(name="username")

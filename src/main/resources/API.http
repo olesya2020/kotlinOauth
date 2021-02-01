@@ -1,10 +1,26 @@
 GET localhost:8080/api/persons
 
 ###
+
+GET localhost:8080/api/usercontent
+
+###
+
 POST localhost:8080/api/auth/signin
 Content-Type: application/json
 
 {
-  "username" : "sa",
+  "username" : "olesya",
   "password" : "123"
 }
+
+###
+
+POST localhost:8080/api/auth/signup
+Content-Type: application/json
+
+{
+  "username" : "olesya",
+  "password" : "123"
+}
+

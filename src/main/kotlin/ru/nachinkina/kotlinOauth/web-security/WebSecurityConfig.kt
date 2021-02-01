@@ -16,6 +16,9 @@ import ru.nachinkina.kotlinOauth.handler.UserDetailsServiceImpl
 import ru.nachinkina.kotlinOauth.jwt.JwtAuthEntryPoint
 import ru.nachinkina.kotlinOauth.jwt.JwtAuthTokenFilter
 import kotlin.jvm.Throws
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider
+import org.springframework.security.crypto.password.PasswordEncoder
+
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +30,9 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Autowired
     private val unauthorizedHandler: JwtAuthEntryPoint? = null
+
+    @Autowired
+    lateinit var encoder: PasswordEncoder
 
     @Bean
     fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
@@ -40,7 +46,8 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
-        auth.userDetailsService(userDetailsService)
+        auth
+            .userDetailsService(userDetailsService)
             .passwordEncoder(bCryptPasswordEncoder())
 
     }
@@ -66,4 +73,6 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         http.addFilterBefore(authenticationJwtTokenFilter(),
             UsernamePasswordAuthenticationFilter::class.java)
     }
+
+
 }
