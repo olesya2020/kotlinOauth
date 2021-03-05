@@ -12,15 +12,14 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import ru.nachinkina.kotlinOauth.entity.User
 import ru.nachinkina.kotlinOauth.jwt.JwtProvider
-import ru.nachinkina.kotlinOauth.jwt.JwtResponse
-import ru.nachinkina.kotlinOauth.jwt.ResponseMessage
-import ru.nachinkina.kotlinOauth.DTO.LoginUser
-import ru.nachinkina.kotlinOauth.DTO.NewUser
+import ru.nachinkina.kotlinOauth.response.JwtResponse
+import ru.nachinkina.kotlinOauth.response.ResponseMessage
+import ru.nachinkina.kotlinOauth.DTO.UserDTO
 import ru.nachinkina.kotlinOauth.repository.RoleRepository
 import ru.nachinkina.kotlinOauth.repository.UserRepository
 import java.util.*
 
-@CrossOrigin(origins = ["*"], maxAge = 3600)
+//@CrossOrigin(origins = ["*"], maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 class AuthController {
@@ -41,14 +40,14 @@ class AuthController {
     lateinit var jwtProvider: JwtProvider
 
     @PostMapping("/signin")
-    fun authenticateUser(@RequestBody loginRequest: LoginUser): ResponseEntity<*> {
+    fun authenticateUser(@RequestBody requestDTO: UserDTO): ResponseEntity<*> {
 
-        val userCandidate: Optional<User> = userRepository.findByUsername(loginRequest.username!!)
+        val userCandidate: Optional<User> = userRepository.findByUsername(requestDTO.username!!)
 
         if (userCandidate.isPresent) {
             val user: User = userCandidate.get()
             val authentication = authenticationManager.authenticate(
-                UsernamePasswordAuthenticationToken(loginRequest.username, loginRequest.password)
+                UsernamePasswordAuthenticationToken(requestDTO.username, requestDTO.password)
             )
             SecurityContextHolder.getContext().setAuthentication(authentication)
             val jwt: String = jwtProvider.generateJwtToken(user.username!!)
@@ -62,7 +61,7 @@ class AuthController {
     }
 
     @PostMapping("/signup")
-    fun registerUser(@RequestBody newUser: NewUser): ResponseEntity<*> {
+    fun registerUser(@RequestBody newUser: UserDTO): ResponseEntity<*> {
 
         val userCandidate: Optional <User> = userRepository.findByUsername(newUser.username!!)
 
@@ -79,7 +78,8 @@ class AuthController {
 
             return ResponseEntity(ResponseMessage("User registered successfully!"), HttpStatus.OK)
         } else {
-            return ResponseEntity(ResponseMessage("User already exists!"),
+            return ResponseEntity(
+                ResponseMessage("User already exists!"),
                 HttpStatus.BAD_REQUEST)
         }
     }

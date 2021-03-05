@@ -5,5 +5,6 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import ru.nachinkina.kotlinOauth.entity.Person
 
+@Repository
 interface PersonRepository: CrudRepository<Person, Long> {
 }

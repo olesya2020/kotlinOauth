@@ -1,9 +1,9 @@
-package ru.nachinkina.kotlinOauth.jwt
+package ru.nachinkina.kotlinOauth.response
 
 import org.springframework.security.core.GrantedAuthority
 
 class JwtResponse(var accessToken: String?,
                   var username: String?,
 val authorities : Collection<GrantedAuthority>) {
-    var type = "Bearer"
+    var type = "Ok!"
 }

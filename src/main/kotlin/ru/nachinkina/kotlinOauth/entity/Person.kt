@@ -1,7 +1,5 @@
 package ru.nachinkina.kotlinOauth.entity
 
-import lombok.Data
-import lombok.NoArgsConstructor
 import javax.persistence.*
 
 @Entity

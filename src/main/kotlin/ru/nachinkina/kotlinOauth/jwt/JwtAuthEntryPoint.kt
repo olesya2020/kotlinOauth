@@ -10,6 +10,8 @@ import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+//для обработки ошибок авторизации
+// и дальнейшего использования в настройках веб-безопасности
 @Component
 class JwtAuthEntryPoint : AuthenticationEntryPoint {
 

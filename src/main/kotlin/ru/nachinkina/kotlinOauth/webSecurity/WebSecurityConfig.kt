@@ -1,4 +1,4 @@
-package ru.nachinkina.kotlinOauth.`web-security`
+package ru.nachinkina.kotlinOauth.webSecurity
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -16,10 +16,8 @@ import ru.nachinkina.kotlinOauth.handler.UserDetailsServiceImpl
 import ru.nachinkina.kotlinOauth.jwt.JwtAuthEntryPoint
 import ru.nachinkina.kotlinOauth.jwt.JwtAuthTokenFilter
 import kotlin.jvm.Throws
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider
-import org.springframework.security.crypto.password.PasswordEncoder
 
-
+//бин, ответственный за веб-безопасность
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -30,9 +28,6 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Autowired
     private val unauthorizedHandler: JwtAuthEntryPoint? = null
-
-    @Autowired
-    lateinit var encoder: PasswordEncoder
 
     @Bean
     fun bCryptPasswordEncoder(): BCryptPasswordEncoder {

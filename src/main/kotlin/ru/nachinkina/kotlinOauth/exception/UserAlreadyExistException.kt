@@ -1,7 +1,6 @@
 package ru.nachinkina.kotlinOauth.exception
 
-class UserAlreadyExistException : RuntimeException {
-
+class UserAlreadyExistException : RuntimeException{
     constructor() : super() {}
 
     constructor(message: String, cause: Throwable) : super(message, cause) {}
@@ -10,9 +9,4 @@ class UserAlreadyExistException : RuntimeException {
 
     constructor(cause: Throwable) : super(cause) {}
 
-    companion object {
-
-        private val serialVersionUID = 5861310537366287163L
-
-    }
 }

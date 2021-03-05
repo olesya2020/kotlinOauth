@@ -1,4 +1,4 @@
-package ru.nachinkina.kotlinOauth.handler
+package ru.nachinkina.kotlinOauth.entity
 
 data class Greeting (
     val id: Long,

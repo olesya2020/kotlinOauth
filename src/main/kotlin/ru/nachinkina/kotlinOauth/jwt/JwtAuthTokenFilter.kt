@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 import kotlin.jvm.Throws
 
+//чтобы аутентифицировать пользователей
+// и фильтровать запросы
 class JwtAuthTokenFilter : OncePerRequestFilter(){
 
     @Autowired
@@ -29,7 +31,6 @@ class JwtAuthTokenFilter : OncePerRequestFilter(){
         filterChain: FilterChain
     ) {
         try {
-
             val jwt = getJwt(request)
             if (jwt != null && tokenProvider!!.validateJwtToken(jwt)) {
                 val username = tokenProvider.getUserNameFromJwtToken(jwt)
@@ -50,7 +51,6 @@ class JwtAuthTokenFilter : OncePerRequestFilter(){
 
     private fun getJwt(request: HttpServletRequest): String? {
         val authHeader = request.getHeader("Authorization")
-
         return if (authHeader != null && authHeader.startsWith("Bearer ")) {
             authHeader.replace("Bearer ", "")
         } else null

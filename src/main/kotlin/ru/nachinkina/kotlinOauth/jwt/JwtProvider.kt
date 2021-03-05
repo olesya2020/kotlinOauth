@@ -4,12 +4,12 @@ import io.jsonwebtoken.*
 import io.jsonwebtoken.security.SignatureException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import ru.nachinkina.kotlinOauth.repository.UserRepository
 import java.util.*
 
+//чтобы генерировать и валидировать токены,
+// а также определять пользователя по его токену
 @Component
 class JwtProvider {
 
@@ -45,7 +45,6 @@ class JwtProvider {
         } catch (e: IllegalArgumentException) {
             logger.error("JWT claims string is empty -> Message: {}", e)
         }
-
         return false
     }
 

@@ -1,4 +1,4 @@
-package ru.nachinkina.kotlinOauth.jwt
+package ru.nachinkina.kotlinOauth.response
 
 class ResponseMessage (
     var message: String?

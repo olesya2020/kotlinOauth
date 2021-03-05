@@ -5,7 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 import ru.nachinkina.kotlinOauth.entity.User
-import ru.nachinkina.kotlinOauth.handler.Greeting
+import ru.nachinkina.kotlinOauth.entity.Greeting
 import ru.nachinkina.kotlinOauth.handler.PersonService
 import ru.nachinkina.kotlinOauth.repository.UserRepository
 
@@ -13,6 +13,7 @@ import ru.nachinkina.kotlinOauth.repository.UserRepository
 @RestController
 @RequestMapping("/api")
 class Controlller(
+
     @Autowired
     val personService: PersonService,
 
